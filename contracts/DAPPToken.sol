@@ -16,7 +16,7 @@ contract DAPPToken is Ownable {
     uint256 public buyPrice;
     // Объявляем переменную в которой будет храниться общее число токенов
     uint256 public totalSupply;
-    App public appContract;
+    address public appContract;
 
     // Объявляем маппинг для хранения балансов пользователей
     mapping (address => uint256) public balanceOf;
@@ -31,9 +31,10 @@ contract DAPPToken is Ownable {
     event Vote(address from, int current, uint numberOfVotes);
 
     event Log(string _message);
+    event LogA(string _message, address _address);
 
     // Функция инициализации контракта
-    function DAOToken(){
+    function DAPPToken(){
         // Указываем число нулей
         decimals = 18;
         // Объявляем общее число токенов, которое будет создано при инициализации
@@ -47,6 +48,7 @@ contract DAPPToken is Ownable {
         name = "DAPP Token";
         // Указываем символ токена
         symbol = "DAPPT";
+        LogA("DAPPToken init", msg.sender);
     }
 
     function setBuyPrice(uint256 _price) public {
@@ -91,7 +93,7 @@ contract DAPPToken is Ownable {
         // Вызов эвента для логгирования события одобрения перевода токенов
     }
 
-    function setAppContract(App _app) onlyOwner {
+    function setAppContract(address _app) onlyOwner {
         appContract = _app;
     }
 
@@ -107,30 +109,4 @@ contract DAPPToken is Ownable {
         }
 
     }
-
-
-    //    // Функция для отправки эфиров на контракт
-//    function() payable {
-//        // Выполняем внутреннюю функцию контракта
-//        _buy(msg.sender, msg.value);
-//    }
-//
-//    // Функция для отправки эфиров на контракт (вызываемая)
-//    function buy() payable {
-//        _buy(msg.sender, msg.value);
-//    }
-//
-//    // Внутренняя функция покупки
-//    function _buy(address _from, uint256 _value) internal {
-//        // Получаем количество возможных для покупки токенов по курсу
-//        uint256 amount = _value * (10 ** uint256(decimals)) / buyPrice;
-//        // Вызываем внутреннюю функцию перевода токенов
-//        _transfer(this, _from, amount);
-//    }
-//
-//    // Функция для смены названия токена
-//    function changeName(string _name) onlyDAO public {
-//        name = _name;
-//    }
-
 }
