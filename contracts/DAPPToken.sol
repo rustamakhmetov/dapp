@@ -32,6 +32,7 @@ contract DAPPToken is Ownable {
 
     event Log(string _message);
     event LogA(string _message, address _address);
+    event ChangeAppContract(address _from, address _to);
 
     // Функция инициализации контракта
     function DAPPToken(){
@@ -93,7 +94,8 @@ contract DAPPToken is Ownable {
         // Вызов эвента для логгирования события одобрения перевода токенов
     }
 
-    function setAppContract(address _app) onlyOwner {
+    function setAppContract(address _app) public onlyOwner {
+        ChangeAppContract(appContract, _app);
         appContract = _app;
     }
 
